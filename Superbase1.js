@@ -49012,7 +49012,7 @@ rtl.module("WEBLib.StdCtrls",["System","Classes","WEBLib.Controls","SysUtils","W
     return Result;
   };
 });
-rtl.module("Unit1",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.StdCtrls","WEBLib.StdCtrls","WEBLib.REST"],function () {
+rtl.module("Unit1",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.StdCtrls","WEBLib.StdCtrls","WEBLib.REST","WEBLib.JSON"],function () {
   "use strict";
   var $mod = this;
   rtl.createClass(this,"TForm1",pas["WEBLib.Forms"].TForm,function () {
@@ -49021,11 +49021,23 @@ rtl.module("Unit1",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","
       this.WebHttpRequest1 = null;
       this.WebButton1 = null;
       this.WebButton2 = null;
+      this.WebButton3 = null;
+      this.WebButton4 = null;
+      this.WebButton5 = null;
+      this.WebButton6 = null;
+      this.WebLabel1 = null;
+      this.numreg = null;
     };
     this.$final = function () {
       this.WebHttpRequest1 = undefined;
       this.WebButton1 = undefined;
       this.WebButton2 = undefined;
+      this.WebButton3 = undefined;
+      this.WebButton4 = undefined;
+      this.WebButton5 = undefined;
+      this.WebButton6 = undefined;
+      this.WebLabel1 = undefined;
+      this.numreg = undefined;
       pas["WEBLib.Forms"].TForm.$final.call(this);
     };
     this.WebButton1Click = function (Sender) {
@@ -49047,6 +49059,7 @@ rtl.module("Unit1",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","
       try {
         Req.FURL = "https://github.com/IDSFDG/LibretaDigital/edit/main/Directorio.txt";
         Req.FURL = "https://github.com/IDSFDG/LibretaDigitalV4/blob/main/directorio.txt";
+        Req.FURL = "https://github.com/IDSFDG/LibretaDigitalV4/main/directorio.txt";
         Req.FCommand = pas["WEBLib.REST"].THTTPCommand.httpGET;
         Req.Execute(null);
       } finally {
@@ -49056,47 +49069,259 @@ rtl.module("Unit1",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","
     this.WebHttpRequest1Response = function (Sender, AResponse) {
       pas["WEBLib.Dialogs"].ShowMessage("File contents: " + AResponse);
     };
+    this.WebButton3Click = function (Sender) {
+      var $Self = this;
+      var Req = null;
+      var anonKey = "";
+      var RecNota = null;
+      Req = pas["WEBLib.REST"].THttpRequest.$create("Create$1",[$Self]);
+      anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNodWt4bnZ6eXFoY2dmeHBseHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTU2MTgsImV4cCI6MjEwMDM5MTYxOH0.zT3kUXRV2LfqlYXXaqdNuryOWnAqub_5UqCbVym88V4";
+      Req.FHeaders.Clear();
+      Req.FCommand = pas["WEBLib.REST"].THTTPCommand.httpPOST;
+      Req.FURL = "https://<your-project-ref>.supabase.co/rest/v1/your-table";
+      Req.FURL = "https://chukxnvzyqhcgfxplxxw.supabase.co/rest/v1/tablaNotas";
+      Req.FHeaders.AddPair("apikey",anonKey);
+      Req.FHeaders.AddPair("Authorization","Bearer " + anonKey);
+      Req.FHeaders.AddPair("Content-Type","application/json");
+      Req.FHeaders.AddPair("Accept","application/json");
+      RecNota = pas["WEBLib.JSON"].TJSONObject.$create("Create$2");
+      try {
+        RecNota.AddPair$2("nota_texto","String value here");
+        RecNota.AddPair$2("nota_texto","esta es una prueba");
+        Req.FPostData = RecNota.ToString();
+      } finally {
+        RecNota = rtl.freeLoc(RecNota);
+      };
+      Req.Execute(function (AResponse, AReq) {
+        if ((AReq.status === 201) || (AReq.status === 200)) {
+          pas["WEBLib.Dialogs"].ShowMessage("Record successfully inserted into Supabase!");
+        } else {
+          pas["WEBLib.Dialogs"].ShowMessage("Error inserting record. Status: " + pas.SysUtils.TIntegerHelper.ToString$1.call({p: AReq, get: function () {
+              return this.p.status;
+            }, set: function (v) {
+              this.p.status = v;
+            }}) + " - " + AResponse);
+        };
+      });
+    };
+    this.WebButton4Click = function (Sender) {
+      var $Self = this;
+      var Req = null;
+      var anonKey = "";
+      var RecNota = null;
+      Req = pas["WEBLib.REST"].THttpRequest.$create("Create$1",[$Self]);
+      anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNodWt4bnZ6eXFoY2dmeHBseHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTU2MTgsImV4cCI6MjEwMDM5MTYxOH0.zT3kUXRV2LfqlYXXaqdNuryOWnAqub_5UqCbVym88V4";
+      Req.FHeaders.Clear();
+      Req.FCommand = pas["WEBLib.REST"].THTTPCommand.httpGET;
+      Req.FURL = "https://<your-project-ref>.supabase.co/rest/v1/your-table";
+      Req.FURL = "https://chukxnvzyqhcgfxplxxw.supabase.co/rest/v1/tablaNotas";
+      Req.FHeaders.AddPair("apikey",anonKey);
+      Req.FHeaders.AddPair("Authorization","Bearer " + anonKey);
+      Req.FHeaders.AddPair("Content-Type","application/json");
+      Req.FHeaders.AddPair("Accept","application/json");
+      Req.Execute(function (AResponse, AReq) {
+        var JSONArray = null;
+        if ((AReq.status === 201) || (AReq.status === 200)) {
+          pas["WEBLib.Dialogs"].ShowMessage("Select record " + AResponse);
+        } else {
+          pas["WEBLib.Dialogs"].ShowMessage("Error selecting record. Status: " + pas.SysUtils.TIntegerHelper.ToString$1.call({p: AReq, get: function () {
+              return this.p.status;
+            }, set: function (v) {
+              this.p.status = v;
+            }}) + " - " + AResponse);
+        };
+      });
+    };
+    this.WebButton5Click = function (Sender) {
+      var $Self = this;
+      var Req = null;
+      var anonKey = "";
+      var RecNota = null;
+      var RecordID = 0;
+      RecordID = 8;
+      RecordID = pas.SysUtils.StrToInt(this.numreg.GetText());
+      Req = pas["WEBLib.REST"].THttpRequest.$create("Create$1",[$Self]);
+      anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNodWt4bnZ6eXFoY2dmeHBseHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTU2MTgsImV4cCI6MjEwMDM5MTYxOH0.zT3kUXRV2LfqlYXXaqdNuryOWnAqub_5UqCbVym88V4";
+      Req.FHeaders.Clear();
+      Req.FCommand = pas["WEBLib.REST"].THTTPCommand.httpPATCH;
+      Req.FURL = "https://<your-project-ref>.supabase.co/rest/v1/your-table";
+      Req.FURL = "https://chukxnvzyqhcgfxplxxw.supabase.co/rest/v1/tablaNotas?id=eq." + pas.SysUtils.IntToStr(RecordID);
+      Req.FHeaders.AddPair("apikey",anonKey);
+      Req.FHeaders.AddPair("Authorization","Bearer " + anonKey);
+      Req.FHeaders.AddPair("Content-Type","application/json");
+      Req.FHeaders.AddPair("Accept","application/json");
+      RecNota = pas["WEBLib.JSON"].TJSONObject.$create("Create$2");
+      try {
+        RecNota.AddPair$2("nota_texto","NUEVA NOTA DE TEXTO888");
+        Req.FPostData = RecNota.ToString();
+      } finally {
+        RecNota = rtl.freeLoc(RecNota);
+      };
+      Req.Execute(function (AResponse, AReq) {
+        if ((AReq.status === 201) || (AReq.status === 200) || (AReq.status === 204)) {
+          pas["WEBLib.Dialogs"].ShowMessage("Record update successfully  into Supabase!");
+        } else {
+          pas["WEBLib.Dialogs"].ShowMessage("Error update record. Status: " + pas.SysUtils.TIntegerHelper.ToString$1.call({p: AReq, get: function () {
+              return this.p.status;
+            }, set: function (v) {
+              this.p.status = v;
+            }}) + " - " + AResponse);
+        };
+      });
+    };
+    this.WebButton6Click = function (Sender) {
+      var $Self = this;
+      var Req = null;
+      var anonKey = "";
+      var RecNota = null;
+      var RecordID = 0;
+      RecordID = 8;
+      RecordID = pas.SysUtils.StrToInt(this.numreg.GetText());
+      Req = pas["WEBLib.REST"].THttpRequest.$create("Create$1",[$Self]);
+      anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNodWt4bnZ6eXFoY2dmeHBseHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTU2MTgsImV4cCI6MjEwMDM5MTYxOH0.zT3kUXRV2LfqlYXXaqdNuryOWnAqub_5UqCbVym88V4";
+      Req.FHeaders.Clear();
+      Req.FCommand = pas["WEBLib.REST"].THTTPCommand.httpDELETE;
+      Req.FURL = "https://<your-project-ref>.supabase.co/rest/v1/your-table";
+      Req.FURL = "https://chukxnvzyqhcgfxplxxw.supabase.co/rest/v1/tablaNotas?id=eq." + pas.SysUtils.IntToStr(RecordID);
+      Req.FHeaders.AddPair("apikey",anonKey);
+      Req.FHeaders.AddPair("Authorization","Bearer " + anonKey);
+      Req.FHeaders.AddPair("Content-Type","application/json");
+      Req.FHeaders.AddPair("Accept","application/json");
+      Req.Execute(function (AResponse, AReq) {
+        if ((AReq.status === 201) || (AReq.status === 200) || (AReq.status === 204)) {
+          pas["WEBLib.Dialogs"].ShowMessage("Record deleted successfully  into Supabase!");
+        } else {
+          pas["WEBLib.Dialogs"].ShowMessage("Error deleted record. Status: " + pas.SysUtils.TIntegerHelper.ToString$1.call({p: AReq, get: function () {
+              return this.p.status;
+            }, set: function (v) {
+              this.p.status = v;
+            }}) + " - " + AResponse);
+        };
+      });
+    };
     this.LoadDFMValues = function () {
       pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
+      this.WebLabel1 = pas["WEBLib.StdCtrls"].TLabel.$create("Create$1",[this]);
       this.WebButton1 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
       this.WebButton2 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebButton3 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebButton4 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebButton5 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebButton6 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.numreg = pas["WEBLib.StdCtrls"].TEdit.$create("Create$1",[this]);
       this.WebHttpRequest1 = pas["WEBLib.REST"].THttpRequest.$create("Create$1",[this]);
+      this.WebLabel1.BeforeLoadDFMValues();
       this.WebButton1.BeforeLoadDFMValues();
       this.WebButton2.BeforeLoadDFMValues();
+      this.WebButton3.BeforeLoadDFMValues();
+      this.WebButton4.BeforeLoadDFMValues();
+      this.WebButton5.BeforeLoadDFMValues();
+      this.WebButton6.BeforeLoadDFMValues();
+      this.numreg.BeforeLoadDFMValues();
       this.WebHttpRequest1.BeforeLoadDFMValues();
       try {
         this.SetName("Form1");
         this.SetWidth(640);
         this.SetHeight(480);
+        this.WebLabel1.SetParentComponent(this);
+        this.WebLabel1.SetName("WebLabel1");
+        this.WebLabel1.SetLeft(40);
+        this.WebLabel1.SetTop(200);
+        this.WebLabel1.SetWidth(46);
+        this.WebLabel1.SetHeight(15);
+        this.WebLabel1.SetCaption("Registro:");
+        this.WebLabel1.SetHeightPercent(100.000000000000000000);
+        this.WebLabel1.SetWidthPercent(100.000000000000000000);
         this.WebButton1.SetParentComponent(this);
         this.WebButton1.SetName("WebButton1");
-        this.WebButton1.SetLeft(80);
-        this.WebButton1.SetTop(296);
+        this.WebButton1.SetLeft(142);
+        this.WebButton1.SetTop(32);
         this.WebButton1.SetWidth(96);
         this.WebButton1.SetHeight(25);
         this.WebButton1.SetCaption("Superbase");
         this.WebButton1.SetHeightPercent(100.000000000000000000);
+        this.WebButton1.SetVisible(false);
         this.WebButton1.SetWidthPercent(100.000000000000000000);
         this.SetEvent$1(this.WebButton1,this,"OnClick","WebButton1Click");
         this.WebButton2.SetParentComponent(this);
         this.WebButton2.SetName("WebButton2");
-        this.WebButton2.SetLeft(96);
-        this.WebButton2.SetTop(144);
+        this.WebButton2.SetLeft(40);
+        this.WebButton2.SetTop(32);
         this.WebButton2.SetWidth(96);
         this.WebButton2.SetHeight(25);
         this.WebButton2.SetCaption("Directorio");
         this.WebButton2.SetChildOrderEx(1);
         this.WebButton2.SetHeightPercent(100.000000000000000000);
+        this.WebButton2.SetVisible(false);
         this.WebButton2.SetWidthPercent(100.000000000000000000);
         this.SetEvent$1(this.WebButton2,this,"OnClick","WebButton2Click");
+        this.WebButton3.SetParentComponent(this);
+        this.WebButton3.SetName("WebButton3");
+        this.WebButton3.SetLeft(48);
+        this.WebButton3.SetTop(144);
+        this.WebButton3.SetWidth(161);
+        this.WebButton3.SetHeight(25);
+        this.WebButton3.SetCaption("Superbase2 Insert");
+        this.WebButton3.SetChildOrderEx(2);
+        this.WebButton3.SetHeightPercent(100.000000000000000000);
+        this.WebButton3.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.WebButton3,this,"OnClick","WebButton3Click");
+        this.WebButton4.SetParentComponent(this);
+        this.WebButton4.SetName("WebButton4");
+        this.WebButton4.SetLeft(48);
+        this.WebButton4.SetTop(95);
+        this.WebButton4.SetWidth(161);
+        this.WebButton4.SetHeight(25);
+        this.WebButton4.SetCaption("Superbase2 Select");
+        this.WebButton4.SetChildOrderEx(3);
+        this.WebButton4.SetHeightPercent(100.000000000000000000);
+        this.WebButton4.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.WebButton4,this,"OnClick","WebButton4Click");
+        this.WebButton5.SetParentComponent(this);
+        this.WebButton5.SetName("WebButton5");
+        this.WebButton5.SetLeft(48);
+        this.WebButton5.SetTop(240);
+        this.WebButton5.SetWidth(161);
+        this.WebButton5.SetHeight(25);
+        this.WebButton5.SetCaption("Superbase2 Update");
+        this.WebButton5.SetChildOrderEx(4);
+        this.WebButton5.SetHeightPercent(100.000000000000000000);
+        this.WebButton5.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.WebButton5,this,"OnClick","WebButton5Click");
+        this.WebButton6.SetParentComponent(this);
+        this.WebButton6.SetName("WebButton6");
+        this.WebButton6.SetLeft(48);
+        this.WebButton6.SetTop(296);
+        this.WebButton6.SetWidth(161);
+        this.WebButton6.SetHeight(25);
+        this.WebButton6.SetCaption("Superbase2 Delete");
+        this.WebButton6.SetChildOrderEx(5);
+        this.WebButton6.SetHeightPercent(100.000000000000000000);
+        this.WebButton6.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.WebButton6,this,"OnClick","WebButton6Click");
+        this.numreg.SetParentComponent(this);
+        this.numreg.SetName("numreg");
+        this.numreg.SetLeft(104);
+        this.numreg.SetTop(197);
+        this.numreg.SetWidth(121);
+        this.numreg.SetHeight(22);
+        this.numreg.SetChildOrderEx(7);
+        this.numreg.SetHeightPercent(100.000000000000000000);
+        this.numreg.SetWidthPercent(100.000000000000000000);
         this.WebHttpRequest1.SetParentComponent(this);
         this.WebHttpRequest1.SetName("WebHttpRequest1");
         this.SetEvent$1(this.WebHttpRequest1,this,"OnResponse","WebHttpRequest1Response");
         this.WebHttpRequest1.SetLeft(456);
         this.WebHttpRequest1.SetTop(32);
       } finally {
+        this.WebLabel1.AfterLoadDFMValues();
         this.WebButton1.AfterLoadDFMValues();
         this.WebButton2.AfterLoadDFMValues();
+        this.WebButton3.AfterLoadDFMValues();
+        this.WebButton4.AfterLoadDFMValues();
+        this.WebButton5.AfterLoadDFMValues();
+        this.WebButton6.AfterLoadDFMValues();
+        this.numreg.AfterLoadDFMValues();
         this.WebHttpRequest1.AfterLoadDFMValues();
       };
     };
@@ -49106,9 +49331,19 @@ rtl.module("Unit1",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","
     $r.addField("WebHttpRequest1",pas["WEBLib.REST"].$rtti["THttpRequest"]);
     $r.addField("WebButton1",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
     $r.addField("WebButton2",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebButton3",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebButton4",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebButton5",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebButton6",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebLabel1",pas["WEBLib.StdCtrls"].$rtti["TLabel"]);
+    $r.addField("numreg",pas["WEBLib.StdCtrls"].$rtti["TEdit"]);
     $r.addMethod("WebButton1Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
     $r.addMethod("WebButton2Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
     $r.addMethod("WebHttpRequest1Response",0,[["Sender",pas.System.$rtti["TObject"]],["AResponse",rtl.string]]);
+    $r.addMethod("WebButton3Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton4Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton5Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton6Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
   });
   this.Form1 = null;
 });
