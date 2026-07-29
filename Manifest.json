@@ -3,7 +3,7 @@
    "name":"LibretaDigitalSB",
    "description":"",
    "start_url":"LibretaDigitalSB.html",
-   "display":"fullscreen",
+   "display":"standalone",
    "theme_color":"#FFFFFF",
    "background_color":"#FFFFFF",
    "related_applications": [{
